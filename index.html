@@ -4,10 +4,13 @@
 <title>wut</title>
 <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
 <style>
-  html, body { margin: 0; background: #000; padding: 0;
+html, body {
+  margin: 0;
+  background: #000 url(img/stars.gif);
+  padding: 0;
   color: #fff;
   font-family: "Courier New", Courier, monospace;
-  }
+}
 
 #canvas {
   margin: 0;
@@ -58,32 +61,34 @@ var x = 0, y = 0;
 var cscale = 1;
 window.onload = function () {
   canvas = document.getElementById('canvas');
+
   map = new Layer({
     width: window.innerWidth,
     height: window.innerHeight
   });
+
   var sx, sy;
   var csx, csy;
+
   canvas.ontouchstart = function (e) {
     sx = e.touches[0].pageX;
     sy = e.touches[0].pageY;
     csx = x;
     csy = y;
   }
+
   canvas.ontouchmove = function (e) {
     e.preventDefault();
     x = csx + (e.touches[0].pageX - sx) / cscale;
     y = csy + (e.touches[0].pageY - sy) / cscale;
-
     // pinch zoom
     var ec = cscale * e.scale;
     if (ec > 3 || ec < 1) return;
     cscale = ec;
     canvas.style.webkitTransform = 'scale(' + cscale + ',' + cscale + ')';
   }
-  canvas.ontouchend = function (e) {
 
-  }
+  canvas.ontouchend = function (e) {}
   setInterval(render, 1000 / 13);
 
 
@@ -108,15 +113,12 @@ window.onload = function () {
   }
 
 
-
-
   document.getElementById('header').ontouchmove = function (e) {
     e.preventDefault();
   }
   document.getElementById('nav').ontouchmove = function (e) {
     e.preventDefault();
   }
-  //render();
 };
 
 function render () {
@@ -124,6 +126,16 @@ function render () {
   canvas.height = window.innerHeight;
   var ctx = canvas.getContext('2d');
   ctx.drawImage(map.$, x, y);
+}
+
+window.onkeydown = function(e) {
+  var v = 20;
+  switch (e.keyCode) {
+    case 37: x += v; break;
+    case 38: y += v; break;
+    case 39: x -= v; break;
+    case 40: y -= v; break;
+  }
 }
 
 </script>
