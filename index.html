@@ -4,7 +4,10 @@
 <title>wut</title>
 <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
 <style>
-html, body { margin: 0; background: #000; padding: 0; }
+  html, body { margin: 0; background: #000; padding: 0;
+  color: #fff;
+  font-family: "Courier New", Courier, monospace;
+  }
 #canvas {
   margin: 0;
   padding: 0;
@@ -16,13 +19,26 @@ html, body { margin: 0; background: #000; padding: 0; }
   left: 0;
   width: 100%;
   height: 50px;
+  line-height: 50px;
   background: #000;
   opacity: 0.8;
   z-index: 2;
 }
 
 #nav {
-  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 150px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  background: #000;
+  z-index: 3;
+}
+
+#nav:hover {
+  height: 100%;
 }
 
 #viewport {
@@ -68,6 +84,35 @@ window.onload = function () {
 
   }
   setInterval(render, 1000 / 13);
+
+
+  var md = false;
+  canvas.onmousedown = function (e) {  
+    sx = e.pageX;
+    sy = e.pageY;
+    csx = x;
+    csy = y;
+    md = true;
+  }
+  canvas.onmousemove = function (e) {
+    e.preventDefault();
+    if (!md) return;
+    x = csx + (e.pageX - sx) / cscale;
+    y = csy + (e.pageY - sy) / cscale;
+  }
+  canvas.onmouseup = function (e) {
+    md = false;
+  }
+
+
+
+
+  document.getElementById('header').ontouchmove = function (e) {
+    e.preventDefault();
+  }
+  document.getElementById('nav').ontouchmove = function (e) {
+    e.preventDefault();
+  }
   //render();
 };
 
@@ -77,15 +122,16 @@ function render () {
   var ctx = canvas.getContext('2d');
   ctx.drawImage(map.$, x, y);
 }
+
 </script>
 </head>
 <body>
   <div id="wrapper">
     <div id="header">
-
+      &nbsp;&nbsp;&nbsp;&nbsp; <strong>0</strong> coins &nbsp;&nbsp;&nbsp;&nbsp; <strong>0</strong> exp    
     </div>
     <div id="nav">
-
+      <strong>build</strong>
     </div>
     <div id="viewport">
       <canvas id="canvas" />
