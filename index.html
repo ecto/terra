@@ -40,21 +40,33 @@ window.onload = function () {
     width: window.innerWidth,
     height: window.innerHeight
   });
-  canvas.ontouchmove = function (e) {
-    x = e.touches[0].pageX;
-    y = e.touches[0].pageY;
-    render();
-    e.preventDefault();
+  var sx, sy;
+  var csx, csy;
+  canvas.ontouchstart = function (e) {
+    sx = e.touches[0].pageX;
+    sy = e.touches[0].pageY;
+    csx = x;
+    csy = y;
   }
-  //setInterval(render, 1000);
-  render();
+  canvas.ontouchmove = function (e) {
+    x = csx + e.touches[0].pageX - sx;
+    y = csy + e.touches[0].pageY - sy;
+    e.preventDefault();
+    //
+    // pinch zooming?
+    //
+    //if (e.scale >= 2 || e.scale <= 1) return;
+    //canvas.style.webkitTransform = 'scale(' + e.scale + ',' + e.scale + ')';
+  }
+  setInterval(render, 1000 / 60);
+  //render();
 };
 
 function render () {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
   var ctx = canvas.getContext('2d');
-  ctx.drawImage(map.$, 0, 0);
+  ctx.drawImage(map.$, x, y);
 }
 </script>
 </head>
