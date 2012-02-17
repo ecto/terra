@@ -8,6 +8,7 @@
   color: #fff;
   font-family: "Courier New", Courier, monospace;
   }
+
 #canvas {
   margin: 0;
   padding: 0;
@@ -86,22 +87,24 @@ window.onload = function () {
   setInterval(render, 1000 / 13);
 
 
-  var md = false;
-  canvas.onmousedown = function (e) {  
-    sx = e.pageX;
-    sy = e.pageY;
-    csx = x;
-    csy = y;
-    md = true;
-  }
-  canvas.onmousemove = function (e) {
-    e.preventDefault();
-    if (!md) return;
-    x = csx + (e.pageX - sx) / cscale;
-    y = csy + (e.pageY - sy) / cscale;
-  }
-  canvas.onmouseup = function (e) {
-    md = false;
+  if (!~navigator.userAgent.indexOf('Mobile')) {
+    var md = false;
+    canvas.onmousedown = function (e) {  
+      sx = e.pageX;
+      sy = e.pageY;
+      csx = x;
+      csy = y;
+      md = true;
+    }
+    canvas.onmousemove = function (e) {
+      e.preventDefault();
+      if (!md) return;
+      x = csx + (e.pageX - sx) / cscale;
+      y = csy + (e.pageY - sy) / cscale;
+    }
+    canvas.onmouseup = function (e) {
+      md = false;
+    }
   }
 
 
