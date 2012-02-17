@@ -52,8 +52,8 @@ window.onload = function () {
   }
   canvas.ontouchmove = function (e) {
     if (e.scale == 1) {
-      x = csx + e.touches[0].pageX - sx;
-      y = csy + e.touches[0].pageY - sy;
+      x = csx + (e.touches[0].pageX - sx) / cscale;
+      y = csy + (e.touches[0].pageY - sy) / cscale;
     }
     e.preventDefault();
 
