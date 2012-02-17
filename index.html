@@ -7,7 +7,7 @@
 body { margin: 0; }
 </style>
 <script>
-var Canvas = function (options) {
+var Layer = function (options) {
   options = options || {};
   this.id = options.id || 'canvas';
   this.width = options.width || 640;
@@ -22,7 +22,7 @@ var Canvas = function (options) {
   this.y = 0;
 }
 
-Canvas.prototype.init = function () {
+Layer.prototype.init = function () {
   this.clear();
   this.$.style.display = 'block';
   this.tileset = new Image();
@@ -41,27 +41,27 @@ Canvas.prototype.init = function () {
   }
 }
 
-Canvas.prototype.clear = function () {
+Layer.prototype.clear = function () {
   this.$.style.width = this.width;
   this.$.style.height = this.height;
   this.$.width = this.width;
   this.$.height = this.height;
 }
 
-Canvas.prototype.ready = function () {
+Layer.prototype.ready = function () {
   console.log('ready');
 }
 
-Canvas.prototype.render = function () {
+Layer.prototype.render = function () {
   this.clear();
   this.drawMap();
 }
 
-Canvas.prototype.drawMap = function () {
+Layer.prototype.drawMap = function () {
   this.ctx.putImageData(this.map, this.x, this.y);
 }
 
-Canvas.prototype.getTileCoords = function (i) {
+Layer.prototype.getTileCoords = function (i) {
   var w = this.tileset.width;
   var h = this.tileset.height; 
   var pr = w / this.tileSize;
@@ -75,13 +75,13 @@ Canvas.prototype.getTileCoords = function (i) {
   }
 }
 
-Canvas.prototype.renderTile = function (t, x, y) {
+Layer.prototype.renderTile = function (t, x, y) {
   var _ = this.getTileCoords(t);
   var ts = this.tileSize;
   this.ctx.drawImage(this.tileset, _.x, _.y, ts, ts, x, y, ts, ts);
 }
 
-Canvas.prototype.generateMap = function (x, y, r) {
+Layer.prototype.generateMap = function (x, y, r) {
   r = r || this.tileset.width * this.tileset.height / this.tileSize / this.tileSize;
   var map = [];
   for (var i = 0; i < y; i++) {
@@ -95,7 +95,7 @@ Canvas.prototype.generateMap = function (x, y, r) {
   return map;
 }
 
-Canvas.prototype.renderMap = function () {
+Layer.prototype.renderMap = function () {
   var w = 100;
   var h = 200;
   var map = this.generateMap(w, h);
@@ -110,16 +110,15 @@ Canvas.prototype.renderMap = function () {
   //this.drawMap();
 }
 
-Canvas.prototype.test = function () {
+Layer.prototype.test = function () {
   this.ctx.fillStyle = "rgba(0, 0, 200, 0.5)";  
   this.ctx.fillRect(30, 30, 55, 50);
 }
 
-var Layer = function (options) {}
 
 var c;
 window.onload = function () {
-  c = new Canvas({
+  c = new Layer({
     width: window.innerWidth,
     height: window.innerHeight
   });
