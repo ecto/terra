@@ -18,17 +18,20 @@ html, body { margin: 0; background: #000; padding: 0; }
   height: 50px;
   background: #000;
   opacity: 0.8;
+  z-index: 2;
 }
 
 #nav {
   display: none;
+}
+
+#viewport {
   position: absolute;
+  left: 0;
   right: 0;
-  top: 50px;
+  top: 0;
   bottom: 0;
-  width: 200px;
-  background: #000;
-  opacity: 0.8;
+  z-index: 1;
 }
 </style>
 <script src="lib/layer.js"></script>
@@ -84,7 +87,9 @@ function render () {
     <div id="nav">
 
     </div>
-    <canvas id="canvas" />
+    <div id="viewport">
+      <canvas id="canvas" />
+    </div>
   </div>
 </body>
 </html>
