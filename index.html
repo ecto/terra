@@ -51,11 +51,9 @@ window.onload = function () {
     csy = y;
   }
   canvas.ontouchmove = function (e) {
-    if (e.scale == 1) {
-      x = csx + (e.touches[0].pageX - sx) / cscale;
-      y = csy + (e.touches[0].pageY - sy) / cscale;
-    }
     e.preventDefault();
+    x = csx + (e.touches[0].pageX - sx) / cscale;
+    y = csy + (e.touches[0].pageY - sy) / cscale;
 
     // pinch zoom
     var ec = cscale * e.scale;
